@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://nafakahalisi.com
+Sitemap: https://nafakahalisi.com/sitemap.xml
