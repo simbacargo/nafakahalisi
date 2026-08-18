@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getRoute, PHONE, routes, SITE_URL, type Language, type PageKey } from "../content";
 import { extractBody, extractBodyClass, extractJsonLd, legacyNotFound, legacyPages } from "../legacy-pages";
-import { HeroGrainScene } from "./HeroGrainScene";
 
 function ensureMeta(selector: string, attributes: Record<string, string>) {
   let element = document.head.querySelector<HTMLMetaElement | HTMLLinkElement>(selector);
@@ -149,7 +148,7 @@ export function LegacyPage({ language, page }: { language: Language; page: PageK
   }, [html, language, location.hash, navigate]);
 
   const jsonLd = extractJsonLd(html);
-  return <>{jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />}<div ref={root} className={extractBodyClass(html)} dangerouslySetInnerHTML={{ __html: extractBody(html) }} /><HeroGrainScene routeKey={language + "-" + page} /></>;
+  return <>{jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />}<div ref={root} className={extractBodyClass(html)} dangerouslySetInnerHTML={{ __html: extractBody(html) }} /></>;
 }
 
 export function LegacyNotFound() {
