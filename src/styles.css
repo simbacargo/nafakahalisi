@@ -474,8 +474,10 @@ h1 em, h2 em { color: var(--green-700); font-style: italic; }
   }
   .mobile-nav {
     counter-reset: mobile-nav-item;
-    position: fixed;
-    inset: var(--mobile-nav-top, 78px) 0 0;
+    position: absolute;
+    inset: 100% 0 auto;
+    height: calc(100vh - var(--mobile-nav-top, 78px));
+    height: calc(100dvh - var(--mobile-nav-top, 78px));
     z-index: 45;
     display: flex;
     overflow-y: auto;
