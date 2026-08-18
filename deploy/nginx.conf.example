@@ -1,0 +1,29 @@
+# Add this server block to the Nginx configuration on the EC2 instance.
+# Replace /var/www/nafakahalisi/dist if your release path is different.
+server {
+    listen 80;
+    server_name nafakahalisi.com www.nafakahalisi.com;
+
+    root /var/www/nafakahalisi/dist;
+    index index.html;
+
+    location /assets/app/ {
+        try_files $uri =404;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location /assets/ {
+        try_files $uri =404;
+        expires 7d;
+        add_header Cache-Control "public";
+    }
+
+    location = /index.html {
+        add_header Cache-Control "no-cache";
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
