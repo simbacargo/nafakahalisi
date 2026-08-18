@@ -457,3 +457,116 @@ h1 em, h2 em { color: var(--green-700); font-style: italic; }
   .footer-wordmark { font-size: 18vw; }
   .footer-bottom { align-items: flex-start; flex-direction: column; }
 }
+
+/* Mobile navigation sheet */
+@media (max-width: 980px) {
+  .menu-toggle {
+    position: relative;
+    z-index: 52;
+    font-size: 1.35rem;
+    line-height: 1;
+    transition: color .2s ease, background .2s ease, transform .2s ease;
+  }
+  .menu-toggle[aria-expanded="true"] {
+    color: white;
+    background: var(--green-950);
+    transform: rotate(90deg);
+  }
+  .mobile-nav {
+    counter-reset: mobile-nav-item;
+    position: fixed;
+    inset: var(--mobile-nav-top, 78px) 0 0;
+    z-index: 45;
+    display: flex;
+    overflow-y: auto;
+    flex-direction: column;
+    padding: clamp(1.4rem, 5vw, 2.5rem) max(1.25rem, calc((100vw - 720px) / 2));
+    color: white;
+    background:
+      radial-gradient(circle at 92% 8%, rgba(245,189,56,.16), transparent 13rem),
+      linear-gradient(145deg, #073c2c, #0a4935 62%, #0d5c42);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-12px);
+    transition: opacity .22s ease, visibility .22s ease, transform .22s ease;
+  }
+  .mobile-nav.open {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .mobile-nav::before {
+    content: "NAFAKA HALISI";
+    display: block;
+    margin-bottom: .65rem;
+    color: rgba(255,255,255,.52);
+    font-size: .62rem;
+    font-weight: 850;
+    letter-spacing: .2em;
+  }
+  .mobile-nav > a:not(.mobile-nav-cta) {
+    counter-increment: mobile-nav-item;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 64px;
+    border-bottom: 1px solid rgba(255,255,255,.14);
+    padding: .75rem .2rem;
+    color: #f2f7f4;
+    font-family: var(--display);
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    transition: color .18s ease, padding .18s ease, background .18s ease;
+  }
+  .mobile-nav > a:not(.mobile-nav-cta)::before {
+    content: "0" counter(mobile-nav-item);
+    min-width: 25px;
+    color: var(--gold);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: .62rem;
+    font-weight: 850;
+    letter-spacing: .08em;
+  }
+  .mobile-nav > a:not(.mobile-nav-cta):hover,
+  .mobile-nav > a:not(.mobile-nav-cta):focus-visible {
+    color: var(--gold);
+    padding-left: .7rem;
+  }
+  .home-page .mobile-nav > a:nth-child(1),
+  .product-page .mobile-nav > a:nth-child(2),
+  .service-page .mobile-nav > a:nth-child(3),
+  .about-page .mobile-nav > a:nth-child(4),
+  .contact-page .mobile-nav > a:nth-child(5) {
+    color: var(--gold);
+    padding-left: .7rem;
+  }
+  .mobile-nav-cta {
+    display: flex;
+    min-height: 52px;
+    align-items: center;
+    justify-content: center;
+    gap: .65rem;
+    margin-top: auto;
+    border: 0;
+    border-radius: 999px;
+    padding: .8rem 1.2rem;
+    color: #2d2105;
+    background: var(--gold);
+    font-size: .83rem;
+    font-weight: 850;
+    box-shadow: 0 14px 32px rgba(0,0,0,.2);
+  }
+}
+
+@media (max-width: 380px) {
+  .nav-wrap { gap: .65rem; }
+  .brand { gap: .5rem; }
+  .brand strong { font-size: .8rem; }
+  .brand small { display: none; }
+  .nav-actions { gap: .4rem; }
+  .language-link { padding: .5rem .65rem; }
+}

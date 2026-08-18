@@ -12,6 +12,16 @@ describe("bilingual client routing", () => {
     expect(window.location.pathname).toBe("/");
   });
 
+  it("opens an accessible mobile navigation sheet", () => {
+    render(<MemoryRouter initialEntries={["/"]}><App /></MemoryRouter>);
+    const button = screen.getByRole("button", { name: "Fungua menyu" });
+    fireEvent.click(button);
+    expect(button).toHaveAttribute("aria-expanded", "true");
+    expect(button).toHaveAccessibleName("Funga menyu");
+    expect(document.querySelector("[data-mobile-menu]")).toHaveClass("open");
+    expect(document.querySelector(".mobile-nav-cta")).toHaveTextContent("Tuandikie WhatsApp");
+  });
+
   it("switches to the equivalent page in the other language", async () => {
     render(<MemoryRouter initialEntries={["/en/services/"]}><App /></MemoryRouter>);
     fireEvent.click(screen.getByRole("link", { name: "SW" }));

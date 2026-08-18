@@ -45,23 +45,31 @@ export function LegacyPage({ language, page }: { language: Language; page: PageK
     if (!container) return;
     const menuButton = container.querySelector<HTMLButtonElement>("[data-menu-toggle]");
     const mobileMenu = container.querySelector<HTMLElement>("[data-mobile-menu]");
+    const header = container.querySelector<HTMLElement>(".site-header");
+    const positionMobileMenu = () => {
+      if (!mobileMenu || !header) return;
+      mobileMenu.style.setProperty("--mobile-nav-top", Math.round(header.getBoundingClientRect().bottom) + "px");
+    };
     const closeMenu = () => {
       if (!menuButton || !mobileMenu) return;
       mobileMenu.classList.remove("open");
+      mobileMenu.style.removeProperty("--mobile-nav-top");
       menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", language === "en" ? "Open menu" : "Fungua menyu");
       menuButton.textContent = "☰";
       document.body.classList.remove("menu-open");
     };
     const toggleMenu = () => {
       if (!menuButton || !mobileMenu) return;
       const open = mobileMenu.classList.toggle("open");
+      if (open) positionMobileMenu();
       menuButton.setAttribute("aria-expanded", String(open));
+      menuButton.setAttribute("aria-label", open ? (language === "en" ? "Close menu" : "Funga menyu") : (language === "en" ? "Open menu" : "Fungua menyu"));
       menuButton.textContent = open ? "×" : "☰";
       document.body.classList.toggle("menu-open", open);
     };
     const handleKeydown = (event: KeyboardEvent) => { if (event.key === "Escape") closeMenu(); };
-    const handleResize = () => { if (window.innerWidth > 980) closeMenu(); };
-    const header = container.querySelector(".site-header");
+    const handleResize = () => { if (window.innerWidth > 980) closeMenu(); else if (mobileMenu?.classList.contains("open")) positionMobileMenu(); };
     const updateHeader = () => header?.classList.toggle("is-scrolled", window.scrollY > 12);
     const handleNavigation = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
